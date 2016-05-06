@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import traspuesto.andres.domain.Aplicacion;
+import traspuesto.andres.domain.Encuestador;
 
 /**
  *
@@ -29,12 +29,12 @@ import traspuesto.andres.domain.Aplicacion;
 @SpringApplicationConfiguration(classes = TestApplicationContext.class)
 @ActiveProfiles("test")
 @Transactional
-public class AplicacionDaoTest {
+public class EncuestadorDaoTest {
     
     @Autowired
-    AplicacionDao aplicacionDao;
+    EncuestadorDao encuestadorDao;
 
-    public AplicacionDaoTest() {
+    public EncuestadorDaoTest() {
     }
 
     @Before
@@ -44,9 +44,9 @@ public class AplicacionDaoTest {
     @Test
     @Sql(executionPhase=ExecutionPhase.BEFORE_TEST_METHOD,scripts="classpath:insert-h2.sql")
     public void testSave() {
-        Aplicacion app = new Aplicacion();
+        Encuestador app = new Encuestador();
         app.setEmail("andrestraspuesto@gmail.com");
-        aplicacionDao.save(app);
+        encuestadorDao.save(app);
         Assert.assertTrue(app.getId() != null);
         
     }
@@ -54,23 +54,23 @@ public class AplicacionDaoTest {
     @Test
     @Sql(executionPhase=ExecutionPhase.BEFORE_TEST_METHOD,scripts="classpath:insert-h2.sql")
     public void testFindById(){
-        Aplicacion app = aplicacionDao.findOne(1L);
+        Encuestador app = encuestadorDao.findOne(1L);
         Assert.assertEquals("mockActiva@test.com", app.getEmail());
     }
     
     @Test
     @Sql(executionPhase=ExecutionPhase.BEFORE_TEST_METHOD,scripts="classpath:insert-h2.sql")
     public void testFindAll(){
-        List<Aplicacion> appList = aplicacionDao.findAll();
+        List<Encuestador> appList = encuestadorDao.findAll();
         Assert.assertEquals(2, appList.size());
     }
     
     @Test
     @Sql(executionPhase=ExecutionPhase.BEFORE_TEST_METHOD,scripts="classpath:insert-h2.sql")
     public void testDelete(){
-        Aplicacion app = aplicacionDao.findOne(1L);
-        aplicacionDao.delete(app);
-        List<Aplicacion> appList = aplicacionDao.findAll();
+        Encuestador app = encuestadorDao.findOne(1L);
+        encuestadorDao.delete(app);
+        List<Encuestador> appList = encuestadorDao.findAll();
         Assert.assertEquals(1, appList.size());
         Assert.assertEquals("mockInactiva@test.com", appList.get(0).getEmail());
     }

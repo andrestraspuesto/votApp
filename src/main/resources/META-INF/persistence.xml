@@ -3,9 +3,9 @@
   <persistence-unit name="traspuesto.andres_votApp_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>traspuesto.andres.domain.Votante</class>
-    <class>traspuesto.andres.domain.Aplicacion</class>
-    <class>traspuesto.andres.domain.VotanteItem</class>
     <class>traspuesto.andres.domain.Item</class>
+    <class>traspuesto.andres.domain.Encuestador</class>
+    <class>traspuesto.andres.domain.Voto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:8506/contador?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="votApp"/>

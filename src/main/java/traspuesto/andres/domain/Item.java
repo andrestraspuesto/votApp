@@ -28,13 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "item")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
-    @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
-    @NamedQuery(name = "Item.findByUri", query = "SELECT i FROM Item i WHERE i.uri = :uri"),
-    @NamedQuery(name = "Item.findByPuntuacionMin", query = "SELECT i FROM Item i WHERE i.puntuacionMin = :puntuacionMin"),
-    @NamedQuery(name = "Item.findByPuntuacionMax", query = "SELECT i FROM Item i WHERE i.puntuacionMax = :puntuacionMax"),
-    @NamedQuery(name = "Item.findByNumVotosMax", query = "SELECT i FROM Item i WHERE i.numVotosMax = :numVotosMax")})
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,16 +48,22 @@ public class Item implements Serializable {
     @Column(name = "puntuacion_max")
     private Integer puntuacionMax;
     
-    @Column(name = "num_votos_max")
-    private Integer numVotosMax;
+    @Column(name = "puntuacion_acum")
+    private Integer puntuacionAcum;
     
-    @JoinColumn(name = "aplicacion_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Aplicacion aplicacionId;
+    @Column(name = "votos_acum")
+    private Integer votosAcum;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
-    private List<VotanteItem> votanteItemList;
+    @Column(name = "max_votos_votante")
+    private Integer maxVotosVotante;
+    
+    @Column(name = "encuestador_id")
+    private Long encuestadorId;
+    
+    @Column(name = "voto_anonimo")
+    private Boolean votoAnonimo;
 
+    
     public Item() {
     }
 
@@ -80,6 +79,46 @@ public class Item implements Serializable {
         this.id = id;
     }
 
+    public Integer getPuntuacionAcum() {
+        return puntuacionAcum;
+    }
+
+    public void setPuntuacionAcum(Integer puntuacionAcum) {
+        this.puntuacionAcum = puntuacionAcum;
+    }
+
+    public Integer getVotosAcum() {
+        return votosAcum;
+    }
+
+    public void setVotosAcum(Integer votosAcum) {
+        this.votosAcum = votosAcum;
+    }
+
+    public Integer getMaxVotosVotante() {
+        return maxVotosVotante;
+    }
+
+    public void setMaxVotosVotante(Integer maxVotosVotante) {
+        this.maxVotosVotante = maxVotosVotante;
+    }
+
+    public Long getEncuestadorId() {
+        return encuestadorId;
+    }
+
+    public void setEncuestadorId(Long encuestadorId) {
+        this.encuestadorId = encuestadorId;
+    }
+
+    public Boolean getVotoAnonimo() {
+        return votoAnonimo;
+    }
+
+    public void setVotoAnonimo(Boolean votoAnonimo) {
+        this.votoAnonimo = votoAnonimo;
+    }
+    
     public String getUri() {
         return uri;
     }
@@ -105,29 +144,21 @@ public class Item implements Serializable {
     }
 
     public Integer getNumVotosMax() {
-        return numVotosMax;
+        return maxVotosVotante;
     }
 
     public void setNumVotosMax(Integer numVotosMax) {
-        this.numVotosMax = numVotosMax;
+        this.maxVotosVotante = numVotosMax;
     }
 
-    public Aplicacion getAplicacionId() {
-        return aplicacionId;
+    public Long getEncuestador() {
+        return encuestadorId;
     }
 
-    public void setAplicacionId(Aplicacion aplicacionId) {
-        this.aplicacionId = aplicacionId;
+    public void setEncuestador(Long encuestadorId) {
+        this.encuestadorId = encuestadorId;
     }
 
-    @XmlTransient
-    public List<VotanteItem> getVotanteItemList() {
-        return votanteItemList;
-    }
-
-    public void setVotanteItemList(List<VotanteItem> votanteItemList) {
-        this.votanteItemList = votanteItemList;
-    }
 
     @Override
     public int hashCode() {

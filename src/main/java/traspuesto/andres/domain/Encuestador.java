@@ -25,14 +25,9 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author andrestraspuesto@gmail.com
  */
 @Entity
-@Table(name = "aplicacion")
+@Table(name = "encuestador")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Aplicacion.findAll", query = "SELECT a FROM Aplicacion a"),
-    @NamedQuery(name = "Aplicacion.findById", query = "SELECT a FROM Aplicacion a WHERE a.id = :id"),
-    @NamedQuery(name = "Aplicacion.findByActiva", query = "SELECT a FROM Aplicacion a WHERE a.activa = :activa"),
-    @NamedQuery(name = "Aplicacion.findByEmail", query = "SELECT a FROM Aplicacion a WHERE a.email = :email")})
-public class Aplicacion implements Serializable {
+public class Encuestador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -50,16 +45,16 @@ public class Aplicacion implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aplicacionId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestadorId")
     private List<Votante> votanteList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aplicacionId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestadorId")
     private List<Item> itemList;
 
-    public Aplicacion() {
+    public Encuestador() {
     }
 
-    public Aplicacion(Long id) {
+    public Encuestador(Long id) {
         this.id = id;
     }
 
@@ -114,10 +109,10 @@ public class Aplicacion implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Aplicacion)) {
+        if (!(object instanceof Encuestador)) {
             return false;
         }
-        Aplicacion other = (Aplicacion) object;
+        Encuestador other = (Encuestador) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

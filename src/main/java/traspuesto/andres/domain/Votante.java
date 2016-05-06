@@ -3,22 +3,16 @@
 package traspuesto.andres.domain;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,10 +21,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "votante")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Votante.findAll", query = "SELECT v FROM Votante v"),
-    @NamedQuery(name = "Votante.findById", query = "SELECT v FROM Votante v WHERE v.id = :id"),
-    @NamedQuery(name = "Votante.findByActivo", query = "SELECT v FROM Votante v WHERE v.activo = :activo")})
 public class Votante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,13 +34,9 @@ public class Votante implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     
-    @JoinColumn(name = "aplicacion_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Aplicacion aplicacionId;
+    @Column(name = "encuestador_id")
+    private Long encuestadorId;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "votanteId")
-    private List<VotanteItem> votanteItemList;
-
     public Votante() {
     }
 
@@ -74,22 +60,15 @@ public class Votante implements Serializable {
         this.activo = activo;
     }
 
-    public Aplicacion getAplicacionId() {
-        return aplicacionId;
+    public Long getEncuestador() {
+        return encuestadorId;
     }
 
-    public void setAplicacionId(Aplicacion aplicacionId) {
-        this.aplicacionId = aplicacionId;
+    public void setEncuestador(Long encuestadorId) {
+        this.encuestadorId = encuestadorId;
     }
 
-    @XmlTransient
-    public List<VotanteItem> getVotanteItemList() {
-        return votanteItemList;
-    }
-
-    public void setVotanteItemList(List<VotanteItem> votanteItemList) {
-        this.votanteItemList = votanteItemList;
-    }
+    
 
     @Override
     public int hashCode() {
