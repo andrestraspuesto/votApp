@@ -3,11 +3,13 @@
 package traspuesto.andres.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,11 +47,18 @@ public class Encuestador implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestadorId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestador", fetch = FetchType.LAZY)
     private List<Votante> votanteList;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestadorId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestador", fetch = FetchType.LAZY)
     private List<Item> itemList;
+    
+    @Column(name = "fh_alta")
+    private LocalDateTime fhAlta;
+    
+    @Column(name = "fh_baja")
+    private LocalDateTime fhBaja;
+    
 
     public Encuestador() {
     }
@@ -66,7 +75,23 @@ public class Encuestador implements Serializable {
         this.id = id;
     }
 
-    public Boolean getActiva() {
+    public LocalDateTime getFhAlta() {
+        return fhAlta;
+    }
+
+    public void setFhAlta(LocalDateTime fhAlta) {
+        this.fhAlta = fhAlta;
+    }
+
+    public LocalDateTime getFhBaja() {
+        return fhBaja;
+    }
+
+    public void setFhBaja(LocalDateTime fhBaja) {
+        this.fhBaja = fhBaja;
+    }
+
+    public Boolean isActiva() {
         return activa;
     }
 

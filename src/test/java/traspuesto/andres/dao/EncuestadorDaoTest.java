@@ -70,6 +70,7 @@ public class EncuestadorDaoTest {
     public void testDelete(){
         Encuestador app = encuestadorDao.findOne(1L);
         encuestadorDao.delete(app);
+        app = null;
         List<Encuestador> appList = encuestadorDao.findAll();
         Assert.assertEquals(1, appList.size());
         Assert.assertEquals("mockInactiva@test.com", appList.get(0).getEmail());

@@ -3,11 +3,14 @@
 package traspuesto.andres.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,9 +47,11 @@ public class Item implements Serializable {
     private String uri;
     
     @Column(name = "puntuacion_min")
+    @NotNull
     private Integer puntuacionMin;
     
     @Column(name = "puntuacion_max")
+    @NotNull
     private Integer puntuacionMax;
     
     @Column(name = "puntuacion_acum")
@@ -55,14 +61,21 @@ public class Item implements Serializable {
     private Integer votosAcum;
     
     @Column(name = "max_votos_votante")
+    @NotNull
     private Integer maxVotosVotante;
     
-    @Column(name = "encuestador_id")
-    private Long encuestadorId;
+    @JoinColumn(name = "encuestador_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Encuestador encuestador;
     
-    @Column(name = "voto_anonimo")
+    @Column(name = "voto_anonimo", columnDefinition="tinyint(1) default 0")
     private Boolean votoAnonimo;
 
+    @Column(name = "fh_inicio_votacion")
+    private LocalDateTime fhInicioVotacion;
+    
+    @Column(name = "fh_fin_votacion")
+    private LocalDateTime fhFinVotacion;
     
     public Item() {
     }
@@ -79,6 +92,23 @@ public class Item implements Serializable {
         this.id = id;
     }
 
+    public LocalDateTime getFhFinVotacion() {
+        return fhFinVotacion;
+    }
+
+    public void setFhFinVotacion(LocalDateTime fhFinVotacion) {
+        this.fhFinVotacion = fhFinVotacion;
+    }
+
+    public LocalDateTime getFhInicioVotacion() {
+        return fhInicioVotacion;
+    }
+
+    public void setFhInicioVotacion(LocalDateTime fhInicioVotacion) {
+        this.fhInicioVotacion = fhInicioVotacion;
+    }
+
+    
     public Integer getPuntuacionAcum() {
         return puntuacionAcum;
     }
@@ -103,12 +133,12 @@ public class Item implements Serializable {
         this.maxVotosVotante = maxVotosVotante;
     }
 
-    public Long getEncuestadorId() {
-        return encuestadorId;
+    public Encuestador getEncuestador() {
+        return encuestador;
     }
 
-    public void setEncuestadorId(Long encuestadorId) {
-        this.encuestadorId = encuestadorId;
+    public void setEncuestador(Encuestador encuestador) {
+        this.encuestador = encuestador;
     }
 
     public Boolean getVotoAnonimo() {
@@ -151,14 +181,7 @@ public class Item implements Serializable {
         this.maxVotosVotante = numVotosMax;
     }
 
-    public Long getEncuestador() {
-        return encuestadorId;
-    }
-
-    public void setEncuestador(Long encuestadorId) {
-        this.encuestadorId = encuestadorId;
-    }
-
+   
 
     @Override
     public int hashCode() {

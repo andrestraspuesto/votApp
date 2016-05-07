@@ -10,24 +10,24 @@ package traspuesto.andres.exception;
  *
  * @author andrestraspuesto@gmail.com
  */
-public class NullVotanteException extends Exception {
+public class FueraDeFechaException extends Exception {
 
     /**
-     * Creates a new instance of <code>NullVotanteException</code> without detail message.
+     * Creates a new instance of <code>FueraDeFechaException</code> without detail message.
      */
-    public NullVotanteException() {
+    public FueraDeFechaException() {
     }
 
 
     /**
-     * Constructs an instance of <code>NullVotanteException</code> with the specified detail message.
+     * Constructs an instance of <code>FueraDeFechaException</code> with the specified detail message.
      * @param msg the detail message.
      */
-    public NullVotanteException(String msg) {
+    public FueraDeFechaException(String msg) {
         super(msg);
     }
 
-    public NullVotanteException(String message, Throwable cause) {
+    public FueraDeFechaException(String message, Throwable cause) {
         super(message, cause);
     }
     

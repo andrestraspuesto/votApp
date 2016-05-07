@@ -3,12 +3,16 @@
 package traspuesto.andres.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,8 +38,15 @@ public class Votante implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     
-    @Column(name = "encuestador_id")
-    private Long encuestadorId;
+    @JoinColumn(name = "encuestador_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Encuestador encuestador;
+    
+    @Column(name = "fh_alta")
+    private LocalDateTime fhAlta;
+    
+    @Column(name = "fh_baja")
+    private LocalDateTime fhBaja;
     
     public Votante() {
     }
@@ -52,7 +63,24 @@ public class Votante implements Serializable {
         this.id = id;
     }
 
-    public Boolean getActivo() {
+    public LocalDateTime getFhAlta() {
+        return fhAlta;
+    }
+
+    public void setFhAlta(LocalDateTime fhAlta) {
+        this.fhAlta = fhAlta;
+    }
+
+    public LocalDateTime getFhBaja() {
+        return fhBaja;
+    }
+
+    public void setFhBaja(LocalDateTime fhBaja) {
+        this.fhBaja = fhBaja;
+    }
+
+    
+    public Boolean isActivo() {
         return activo;
     }
 
@@ -60,12 +88,12 @@ public class Votante implements Serializable {
         this.activo = activo;
     }
 
-    public Long getEncuestador() {
-        return encuestadorId;
+    public Encuestador getEncuestador() {
+        return encuestador;
     }
 
-    public void setEncuestador(Long encuestadorId) {
-        this.encuestadorId = encuestadorId;
+    public void setEncuestador(Encuestador encuestador) {
+        this.encuestador = encuestador;
     }
 
     

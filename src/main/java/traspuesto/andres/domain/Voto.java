@@ -1,6 +1,7 @@
 package traspuesto.andres.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -41,12 +42,10 @@ public class Voto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
+    private LocalDateTime fecha;
 
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    @ManyToOne(optional = true)
-    private Item item;
+    @Column(name = "item_id")
+    private Long itemId;
 
     @Column(name = "votante_id")
     private Long votanteId;
@@ -58,7 +57,7 @@ public class Voto implements Serializable {
         this.id = id;
     }
 
-    public Voto(Long id, int puntuacion, Date fecha) {
+    public Voto(Long id, int puntuacion, LocalDateTime fecha) {
         this.id = id;
         this.puntuacion = puntuacion;
         this.fecha = fecha;
@@ -80,29 +79,31 @@ public class Voto implements Serializable {
         this.puntuacion = puntuacion;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
-    public Item getItem() {
-        return item;
+    public Long getItemId() {
+        return itemId;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public Long getVotanteId() {
         return votanteId;
     }
 
-    public void setVotanteId(Long votanteId) {
-        this.votanteId = votanteId;
+    public void setVotanteId(Long votante) {
+        this.votanteId = votante;
     }
+
+    
 
     @Override
     public int hashCode() {

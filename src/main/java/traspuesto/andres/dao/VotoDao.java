@@ -9,6 +9,7 @@ import traspuesto.andres.domain.Voto;
  */
 public interface VotoDao extends GenericDao<Voto, Long>{
     
+    
     Integer countByItemIdAndVotanteId(Long itemId, Long votanteId);
     
     Integer countByItemId(Long itemId);
